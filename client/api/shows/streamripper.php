@@ -24,10 +24,22 @@ if ( $_SERVER["REQUEST_METHOD"] == "GET" ) {
 	$mysqli = construct_connection();
 
 	$showID = get_current_show_id($mysqli);
-	$show_name = get_current_show_name($mysqli);
+	$scheduleID = get_current_schedule_id($mysqli);
 
-	exit("TITLE=$showID\n"
-		. "ARTIST=$show_name\n"
+	# If scheduleID is 0, then our automation is playing, and we should not include the metadata to make it
+	# simpler for our syncer to parse. Otherwise, we pass the metadata as expected by streamripper.
+	if ( $scheduleID == 0 ) {
+		$title = 0;
+		$artist = 0;
+	} else {
+		$show_name = get_current_show_name($mysqli);
+
+		$title = $showID;
+		$artist = $show_name;
+	}
+
+	exit("TITLE=$title\n"
+		. "ARTIST=$artist\n"
 		. ".\n");
 }
 ?>

@@ -40,6 +40,22 @@ function get_current_show_name($mysqli)
 }
 
 /**
+ * Get the current schedule ID.
+ * 
+ * @param mysqli
+ * @return current schedule ID
+ */
+function get_current_schedule_id($mysqli)
+{
+	$q = "SELECT scheduleID FROM `schedule` AS s "
+		. "ORDER BY s.scheduleID DESC "
+		. "LIMIT 1;";
+	$schedule = exec_query($mysqli, $q)->fetch_assoc();
+
+	return $schedule["scheduleID"];
+}
+
+/**
  * Get a list of recorded shows.
  *
  * @param mysqli
