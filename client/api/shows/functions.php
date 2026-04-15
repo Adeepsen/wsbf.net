@@ -47,12 +47,28 @@ function get_current_show_name($mysqli)
  */
 function get_current_schedule_id($mysqli)
 {
-	$q = "SELECT scheduleID FROM `schedule` AS s "
-		. "ORDER BY s.scheduleID DESC "
+	$q = "SELECT scheduleID FROM `show` AS s "
+		. "ORDER BY s.showID DESC "
 		. "LIMIT 1;";
 	$schedule = exec_query($mysqli, $q)->fetch_assoc();
 
 	return $schedule["scheduleID"];
+}
+
+/**
+ * Get the current show metadata (ID, name, and schedule ID).
+ * Consolidates three separate queries into one.
+ *
+ * @param mysqli
+ * @return associative array with showID, show_name, and scheduleID
+ */
+function get_current_show_metadata($mysqli)
+{
+	$q = "SELECT s.showID, s.show_name, s.scheduleID FROM `show` AS s "
+		. "ORDER BY s.showID DESC "
+		. "LIMIT 1;";
+
+	return exec_query($mysqli, $q)->fetch_assoc();
 }
 
 /**
