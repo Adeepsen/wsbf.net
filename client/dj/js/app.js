@@ -39,6 +39,10 @@ app.config(["$stateProvider", "$urlRouterProvider", function($stateProvider, $ur
 			url: "/faq",
 			templateUrl: "views/faq.html"
 		})
+		.state("calendar", {
+			url: "/calendar",
+			templateUrl: "views/calendar.html"
+		})
 		.state("archives", {
 			url: "/archives",
 			templateUrl: "views/archives.html",
